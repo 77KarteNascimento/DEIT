@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_fatura.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo" style="font-size: 10px;">
+			<h:form>
+
+				<h2>
+					<h:outputText value="Medição"/>
+				</h2>
+				
+				<p:fieldset>
+				
+				<p:fieldset>
+				<h:panelGrid columns="7" cellpadding="7" cellspacing="7">
+				
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+					<h:outputLabel value="Nome da Obra: " style="color: blue; font-size: 13px;" />
+				</h:outputLink>
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+				<p:inputText value="#{faturaBean.fatura.obra.nome}"  onclick="dlgObra.show();"
+					style="width: 300px;">
+						<p:ajax event="change" />
+				</p:inputText>	
+				</h:outputLink>
+					
+				</h:panelGrid>
+				</p:fieldset>
+				
+				<p:fieldset legend="Dados da Obra">
+				
+				<h:panelGrid columns="7" cellpadding="7" cellspacing="7">
+				
+				<h:outputLabel value="Nome da Obra: " for="obra"  />
+					<p:inputText  id="obra" value="#{faturaBean.fatura.obra.objeto}" style="width: 300px;" disabled="true">
+							<p:ajax event="change" />
+					</p:inputText>
+
+					<h:outputLabel value="Objeto: " for="objeto"  />
+					<p:inputText  id="objeto" value="#{faturaBean.fatura.obra.objeto}" style="width: 300px;" disabled="true">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Prazo: " for="prazo"  />
+					<p:inputText  id="prazo" value="#{faturaBean.fatura.obra.prazo} Dias" style="width: 90px;" disabled="true">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Data de Início: " for="data_inicio"  />
+					<p:inputText  id="data_inicio" value="#{faturaBean.fatura.obra.data_inicio.time}" style="width: 100px;" disabled="true">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+								<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Valor da Obra: " for="data_termino"  />
+					<p:inputText  id="data_termino" value="#{faturaBean.fatura.obra.valor}" style="width: 100px;" disabled="true">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+					</p:inputText><br /><br />
+				
+				</h:panelGrid>	
+				</p:fieldset>
+				
+				<p:fieldset legend="Dados da Empresa">
+					<h:panelGrid columns="5" cellpadding="7" cellspacing="7">
+				
+				
+				<h:outputLabel value="Empresa: " />
+				<p:inputText value="#{faturaBean.fatura.obra.empresa.nome}" style="width: 300px;" disabled="true"/>
+
+					
+					<h:outputLabel value="CNPJ: " for="cnpj"  />
+					<p:inputText  id="ano" value="#{faturaBean.fatura.obra.empresa.cnpj}" disabled="true"
+					required="true" requiredMessage="Informe o Número de CNPJ" style="width: 140px;" maxlength="14">
+							<p:ajax event="change" />
+					</p:inputText>
+					<br />
+					
+					</h:panelGrid>
+					
+					</p:fieldset>
+					
+					<p:fieldset legend="Informe os Dados da Medição">
+					<h:panelGrid columns="9" cellpadding="3" cellspacing="3" style="color: blue;">
+					
+					<h:outputLabel value="Número da Medição " for="fatura"  />
+					<p:inputText  id="fatura" value="#{faturaBean.fatura.numero}" required="true" requiredMessage="Informe o Número da Medição" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText>
+										
+					<h:outputLabel value="Atestado: " for="atestado"  />
+					<p:inputText  id="atestado" value="#{faturaBean.fatura.atestado}" required="true" requiredMessage="Informe o Número de Atestado" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Nota Fiscal: " for="nf"  />
+					<p:inputText  id="nf" value="#{faturaBean.fatura.nota}" required="true" requiredMessage="Informe o Número da Nota Fiscal" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Data do Atestado: " for="data2"  />
+					<p:calendar  id="data2" value="#{faturaBean.fatura.data}" style="width: 100px;">
+							<f:convertDateTime pattern="dd/MM/yy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+								<p:ajax event="change" />
+					</p:calendar><br /><br />
+					
+					<h:outputLabel value="Valor da Medição " for="valor_fatu"  />
+					<p:inputText  id="valor_fatu" value="#{faturaBean.fatura.valor_fatura}" style="width: 100px;">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Valor Acumulado: " for="valor_acumulado"  />
+					<p:inputText  id="valor_acumulado" value="#{faturaBean.fatura.valor_acumulado}" style="width: 100px;">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Data Inicial da Medição: " for="medicao1"  />
+					<p:calendar  id="medicao1" value="#{faturaBean.fatura.medicao_inicio}" style="width: 70px;">
+							<f:convertDateTime pattern="dd/MM/yy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+								<p:ajax event="change" />
+					</p:calendar>
+					
+					<h:outputLabel value="Data Termino da Medição: " for="medicao2"  />
+					<p:calendar  id="medicao2" value="#{faturaBean.fatura.medicao_final}" style="width: 70px;">
+							<f:convertDateTime pattern="dd/MM/yy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+								<p:ajax event="change" />
+					</p:calendar>
+					
+					</h:panelGrid>
+					
+					<br />
+					<div align="center">
+					<p:commandButton value="Cadastrar" ajax="false" action="#{faturaBean.grava}" image="ui-icon-disk" 
+					rendered="#{not empty faturaBean.fatura.obra}">
+						<p:ajax render="@all" />
+					</p:commandButton>
+					
+					<p:button id="cancela" type="reset" value="Limpar" rendered="#{not empty faturaBean.fatura.empenho}" />
+					</div>
+					
+					</p:fieldset>				
+				
+				</p:fieldset>
+				
+				<p:dataTable id="listFatura" value="#{faturaBean.faturas}"  var="fatura" 
+					emptyMessage="Nenhuma Fatura" paginator="true" rows="20" >
+					
+					<p:column headerText="Número" filterBy="#{fatura.numero}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.numero}" style="width: 90px; text-align: center; float: center; " />
+					</p:column>
+					
+					<p:column headerText="Atestado" filterBy="#{fatura.atestado}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.atestado}" style="width: 90px; text-align: center; float: center; " />
+					</p:column>
+					
+					<p:column headerText="NF" filterBy="#{fatura.nota}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.nota}" />
+					</p:column>
+					
+					<p:column headerText="Empresa" filterBy="#{fatura.obra.empresa.nome}" filterMatchMode="contains">
+						<h:outputText value="#{fatura.obra.empresa.nome}" />
+					</p:column>
+					
+					<p:column headerText="Data Fatura" style="float: center; text-align: center;" >
+						<h:outputText value="#{fatura.data.time}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+						</h:outputText>	
+					</p:column>
+					
+					<p:column headerText="Valor da Fatura" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.valor_fatura}">
+							<f:convertNumber type="currency" locale="pt_BR" pattern="#,##0.00" />
+						</h:outputText>	
+					</p:column>
+					
+					<p:column headerText="Valor Acumulado" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.valor_acumulado}">
+							<f:convertNumber type="currency" locale="pt_BR" pattern="#,##0.00" />
+						</h:outputText>	
+					</p:column>
+					
+					<p:column headerText="Saldo" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.saldo}">
+							<f:convertNumber type="currency" locale="pt_BR" pattern="#,##0.00" />
+						</h:outputText>	
+					</p:column>
+									
+					<p:column headerText="% Financeiro" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.financeiro}">
+							<f:convertNumber pattern="00.00" type="percent" />
+						</h:outputText>
+					</p:column>
+										
+				</p:dataTable>
+				
+				<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+				</h:form>	
+				
+				<p:dialog header="Obras" widgetVar="dlgObra" width="700" resizable="true" modal="true">
+					<h:form id="form1">
+
+						<p:outputPanel id="obra">
+							<p:dataTable value="#{obraBean.orderByNome}" var="obra" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{obra.nome}" filterMatchMode="contains"
+									headerText="Numero" style="float: center; text-align: center;">
+									<h:commandLink value="#{obra.nome}" onclick="dlgObra.hide()"
+										id="empenho" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{faturaBean.fatura.obra}" value="#{obra}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+						</p:outputPanel>
+
+					</h:form>
+				</p:dialog>			
+						
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

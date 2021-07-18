@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_funcionario.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+			<h:form id="form">
+
+				<h2>
+					<h:outputText value="Cadastrar Funcionário" />
+				</h2>
+				
+				<p:growl id="grow" showDetail="true" sticky="true">
+				<h:panelGrid columns="2">
+
+				<p:fieldset legend="Dados do Funcionario" toggleable="true" style="background-image: url(resources/imagens/72.jpg);"><br />
+				
+					<h:outputLink value="javascript:void(0)" onclick="dlgSetor.show();">
+						<h:outputLabel value="Setor: " />
+					</h:outputLink>
+					<p:inputText id="setor" required="true" requiredMessage="Preencha o campo Setor"
+						value="#{funcionarioBean.funcionario.setor.nome}"
+						onclick="dlgSetor.show();" onchange="handler" readonly="true">
+					</p:inputText>
+						<br />
+
+					<h:outputLabel value="Nome: " for="nome" />
+					<p:inputText id="nome" value="#{funcionarioBean.funcionario.nome}" required="true" requiredMessage="Informe o Nome">
+						<f:ajax event="change" />
+					</p:inputText><br />
+										
+					<h:outputLabel value="Matricula: " for="matricula" />
+					<p:inputText id="matricula" value="#{funcionarioBean.funcionario.matricula}" required="true" requiredMessage="Informe a Matricula"> 
+						<f:ajax event="change" />
+					</p:inputText><br />
+					
+					<h:outputLabel value="Campo Secreto: " for="secret" />
+					<p:password id="secret" value="#{funcionarioBean.funcionario.campo_secreto}" feedback="true" 
+							required="true" requiredMessage="Informe o Campo Secreto">
+						<f:ajax event="change" />
+					</p:password><br />
+					
+					<h:outputLabel value="Senha: " for="senha" />
+					<p:password id="senha" value="#{funcionarioBean.funcionario.senha}" required="true" requiredMessage="Informe a Senha"> 
+						<f:ajax event="change" />
+					</p:password><br />
+					
+					<h:outputLabel value="Repetir Senha: " for="repeteSenha" />
+					<p:password id="repeteSenha" value="#{funcionarioBean.funcionario.rep_senha}" required="true" requiredMessage="Informe Repetir Senha"> 
+						<f:ajax event="change" />
+					</p:password><br />
+
+					<p:commandButton value="Cadastrar" action="#{funcionarioBean.grava}" ajax="false" image="ui-icon-disk" update="msg">
+						<f:ajax execute="true" render="@form" />
+					</p:commandButton> 
+					
+					<p:button id="cancela" type="reset" value="Limpar" />
+					
+
+				</p:fieldset>
+				</h:panelGrid>			
+				
+				</p:growl>
+				
+				<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+			</h:form>
+
+			<p:dialog header="Setores" widgetVar="dlgSetor" modal="true"
+				width="500" showEffect="hide" hideEffect="fade" resizable="false" >
+				<h:form id="form1">
+
+					<p:outputPanel id="setores">
+						<p:dataTable value="#{setorBean.setores}" var="setor"
+							paginator="true" rows="5" selectionMode="single">
+
+							<p:column filterBy="#{setor.nome}" filterMatchMode="contains"
+								headerText="Setor" sortBy="#{setor.nome}">
+								<h:commandLink value="#{setor.nome}" onclick="dlgSetor.hide()"
+									id="setor">
+									<f:setPropertyActionListener target="#{funcionarioBean.funcionario.setor}" value="#{setor}" />
+								</h:commandLink>
+							</p:column>	
+								
+							<p:column headerText="Orgão" sortBy="#{setor.orgao.sigla}">
+								<h:outputText value="#{setor.orgao.sigla}" />
+							</p:column>
+
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+
+			</p:dialog>
+
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

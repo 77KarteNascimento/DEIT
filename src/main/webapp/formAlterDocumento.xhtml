@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_documento.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+
+			<h:form id="form">
+
+				<h2>
+					<h:outputText value="Editar Projeto"/>
+				</h2>
+				
+				<p:fieldset>
+				
+				<h:panelGrid columns="3" cellpadding="10" cellspacing="10">
+				
+				<h:outputLabel value="Projeto Básico Nº: " for="numero" style="color: #1E90FF; font-weight:bold;" />
+				<p:inputText id="numero" value="#{documentoBean.documento.numero}" style="width: 90px" /><br /><br />
+				
+				<h:outputLabel value="Ano: " for="ano" style="color: #1E90FF; font-weight:bold;" />
+				<p:inputText id="ano" value="#{documentoBean.documento.ano}" style="width: 90px" /><br /><br />
+				
+				<h:outputLabel value="Tipo de Obra: " for="tipo" style="color: #1E90FF; font-weight:bold;"  />
+					<p:selectOneMenu id="tipo" value="#{documentoBean.documento.tipoObra}">
+						<f:selectItem itemLabel="Aquisição" itemValue="Aquisição" />
+						<f:selectItem itemLabel="Aluguel de Equipamentos" itemValue="Aluguel de Equipamentos" />
+						<f:selectItem itemLabel="Estrada"  itemValue="Estrada" />
+						<f:selectItem itemLabel="Ponte"    itemValue="Ponte" />
+						<f:selectItem itemLabel="Diversos" itemValue="Diversos" />	
+							<p:ajax event="change" />
+					</p:selectOneMenu><br /><br />
+				
+					<h:outputLabel value="Valor do Projeto: " for="valor" style="color: #1E90FF; font-weight:bold;" />
+						<p:inputText id="valor" value="#{documentoBean.documento.valor_obra}" style="width: 90px;">
+							<f:convertNumber pattern="#,##0.00" />
+							<p:ajax event="change" />
+						</p:inputText><br /><br />
+					
+					<h:outputLabel value="Data de Criação: " for="data" style="color: #1E90FF; font-weight:bold;" />
+					<p:calendar id="data" value="#{documentoBean.documento.data.time}" locale="pt_BR" pattern="dd/MM/yyyy" />
+					<br /><br />
+					
+					<h:outputLabel value="Prazo (Dias): " for="prazo" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText  id="prazo" value="#{documentoBean.documento.prazo_execucao}" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Autor do Projeto Básico: " for="autor" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText  id="autor" value="#{documentoBean.documento.autor_projeto}" style="width: 220px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+										
+					<h:outputLabel value="Andamento: " for="andamento" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText  id="andamento" value="#{documentoBean.documento.andamento}" style="width: 300px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					</h:panelGrid>
+					
+					<h:outputLabel value="Descrição: " for="situacao" style="color: #1E90FF; font-weight:bold;"/>
+					<p:inputTextarea id="situacao" value="#{documentoBean.documento.situacao}" rows="5" cols="40">
+						<p:ajax event="change" />
+					</p:inputTextarea><br /><br />
+				
+				<p:commandButton id="grava" value="ALTERAR" action="#{documentoBean.altera}" ajax="false" image="ui-icon-pencil" update="msg"
+					rendered="#{not empty documentoBean.documento.id}">
+					<f:ajax render="@all" />
+				</p:commandButton>		
+				
+				<p:commandButton id="cancel" value="CANCELAR" action="formAlterDocumento.xhtml" immediate="true"
+						rendered="#{not empty documentoBean.documento.id}" ajax="false"  image="ui-icon-close" update="msg">
+						<f:ajax render="@all" />
+					</p:commandButton>
+					
+				<br />
+				
+				</p:fieldset>
+				
+				<p:messages id="msg" />
+				
+				<br /><br />
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+			</h:form>	
+			
+			<p:dialog header="Projetos Cadastrados" widgetVar="dlgDoc" modal="true" width="500"
+			visible="true" closable="false" rendered="#{empty documentoBean.documento.id}">
+					<h:form id="form1">
+
+						<p:outputPanel id="docs">
+							<p:dataTable value="#{documentoBean.documentos}" var="documento" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{documento.numero}" filterMatchMode="contains"
+									headerText="Numero" style="float: center; text-align: center;">
+									<h:commandLink value="#{documento.numero}/#{documento.ano}" onclick="dlgDoc.hide()"
+										id="empenho" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{documentoBean.documento}" value="#{documento}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+						
+						<p:commandButton value="Cancelar" action="formCadDocumento.xhtml" style="float: center; text-align: center;"
+							ajax="false" />
+						</p:outputPanel>
+						
+						<p:messages />
+
+					</h:form>
+				</p:dialog>
+											
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+</html>

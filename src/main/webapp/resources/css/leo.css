@@ -1,0 +1,179 @@
+
+* { margin:0px; padding:0px; }
+a:LINK, a:VISITED {
+	text-decoration: none;
+	text-transform: none;
+	text-shadow: none;
+	text-indent: none;
+	overflow: visible;
+	}
+
+a:HOVER {
+	text-decoration: none;
+	text-transform: none;
+	text-shadow: none;
+	text-indent: none;
+}
+
+a:ACTIVE {
+	text-decoration: underline;
+	text-transform: none;
+	text-shadow: none;
+	text-indent: none;
+}
+
+body {
+	background-color: "#E8E8E8";
+	font-size:12px;	
+	font-family:helvetica, arial, sans-serif;
+	width: 1400px;
+	height: 700px;
+	float: center;
+	text-align: center;
+	margin: 0 auto;
+	position: relative;
+	background-repeat: no-repeat;
+
+}
+
+/** cabecalho **/
+#cabecalho, header{
+	background-color:#1E90FF;
+	background: black;
+	height: 60px;
+	position: relative;
+}
+#logoCompany {
+	float:center;
+	position: absolute;
+	top: 0px;
+	left: 70%;
+	margin-left: -450px; 
+}
+
+#usuarioLogado {
+	float: center;
+	text-align: center;
+	color: #00BFFF;
+	font-size: 13px;
+	font-weight: bolder;
+}
+
+#menubar {
+	font-size:10px;
+	width: 1400px;
+	font-size: 11px;
+}
+
+    .ui-datatable .ui-datatable-data .even-row td {
+	background-color: #87CEFF;
+}
+
+.ui-datatable .ui-datatable-data .odd-row td {
+	background-color: #C6E2FF;
+}
+
+#imgprincipal {
+	width: 1350px;
+	float: center;
+}
+
+#links {
+	width: 135px;
+	float: center;
+	border: 0;
+}
+
+/* miolo */
+#conteudo, section {
+	width: 1400px;
+	position: relative;
+}
+
+/** rodape **/
+#rodape, footer { 
+	width: 90%;
+	position:fixed;
+	bottom: 0;
+	padding:15px 40px;
+	text-align: center;
+	font-size:12px; 
+	color: blue;
+	display: block;
+	float: center;
+}
+
+/* TITULO */
+h2{
+	display:block;
+	position:relative;
+	overflow:hidden;
+	color:#2B2926;
+	text-align:left;
+	height:auto;
+	margin-bottom:10px;
+	border-bottom: 1px solid;
+	clear: both;
+	font-size: x-large;
+	width: 100%;
+}
+
+button {
+	font-size:10px; 
+	size: 12px;
+}
+
+form {
+	margin-bottom: 10px;
+	position: relative;
+	text-align: left;
+}
+
+form .campos {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+
+/* validacao */
+.erros {
+	margin: 0 0 10px 0;
+	padding: 0 8px;
+	clear: both;
+	width: 100px;
+	height: 200px;
+	}
+	
+.erros li {
+	display: inline;
+	list-style-position: inside;
+	list-style-type: none;
+	color: #C22;
+	background: #FFDFDF;
+	border: 2px solid #DF7D7D;
+	float: left;
+	padding: 6px;
+	margin: 3px;	
+}
+
+#img {
+	width: 80px;
+	height: 80px;
+}
+
+#pfieldset {
+	float: left; 
+	text-align: left;
+	font-family: sans-serif;
+	text-align: justify;
+	font-size: 16px;
+}
+
+.ui-datatable .ui-datatable-data .even-row td{  
+    background-color:#F0F9FF;  
+}  
+      
+.ui-datatable .ui-datatable-data .odd-row td{  
+    background-color:#DDDDDD;  
+}
+

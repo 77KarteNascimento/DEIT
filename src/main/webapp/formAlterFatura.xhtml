@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_documento.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+
+			<h:form id="form">
+
+				<h2>
+					<h:outputText value="Editar Fatura"/>
+				</h2>
+				
+				<p:fieldset>
+				
+				<h:panelGrid columns="7" cellpadding="7" cellspacing="7">
+				
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+					<h:outputLabel value="Nome da Obra: " style="color: blue; font-size: 13px;" />
+				</h:outputLink>
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+				<p:inputText value="#{faturaBean.fatura.obra.nome}"  onclick="dlgObra.show();"
+					style="width: 300px;">
+						<p:ajax event="change" />
+				</p:inputText>	
+				</h:outputLink><br /><br /><br />
+					
+				</h:panelGrid>
+					
+				<h:panelGrid columns="5" cellpadding="3" cellspacing="3" style="color: blue;">
+				
+				<h:outputLabel value="Número da Medição " for="fatura"  />
+					<p:inputText  id="fatura" value="#{faturaBean.fatura.numero}" required="true" requiredMessage="Informe o Número da Medição" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText>
+										
+					<h:outputLabel value="Atestado: " for="atestado"  />
+					<p:inputText  id="atestado" value="#{faturaBean.fatura.atestado}" required="true" requiredMessage="Informe o Número de Atestado" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Nota Fiscal: " for="nf"  />
+					<p:inputText  id="nf" value="#{faturaBean.fatura.nota}" required="true" requiredMessage="Informe o Número da Nota Fiscal" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Data do Atestado: " for="data2"  />
+					<p:calendar  id="data2" value="#{faturaBean.fatura.data}" style="width: 100px;" locale="pt_BR" pattern="dd/MM/yyyy">
+								<p:ajax event="change" />
+					</p:calendar><br /><br />
+					
+					<h:outputLabel value="Valor da Medição " for="valor_fatu"  />
+					<p:inputText  id="valor_fatu" value="#{faturaBean.fatura.valor_fatura}" style="width: 100px;">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Valor Acumulado: " for="valor_acumulado"  />
+					<p:inputText  id="valor_acumulado" value="#{faturaBean.fatura.valor_acumulado}" style="width: 100px;">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Data Inicial da Medição: " for="medicao1"  />
+					<p:calendar  id="medicao1" value="#{faturaBean.fatura.medicao_inicio}" style="width: 70px;" locale="pt_BR" pattern="dd/MM/yyyy">
+							<p:ajax event="change" />
+					</p:calendar>
+					
+					<h:outputLabel value="Data Termino da Medição: " for="medicao2"  />
+					<p:calendar  id="medicao2" value="#{faturaBean.fatura.medicao_final}" style="width: 70px;" locale="pt_BR" pattern="dd/MM/yyyy">
+						<p:ajax event="change" />
+					</p:calendar><br /><br />
+					
+					</h:panelGrid>
+					
+					</p:fieldset>
+					
+					<br />
+					<div align="center">
+					<p:commandButton value="Alterar" ajax="false" action="#{faturaBean.altera}" image="ui-icon-pencil" 
+					rendered="#{not empty faturaBean.fatura.obra}">
+						<p:ajax render="@all" />
+					</p:commandButton>
+					
+					<p:button id="cancela" type="reset" value="Limpar" rendered="#{not empty faturaBean.fatura.empenho}" />
+					</div>
+				
+				<p:messages id="msg" />
+				
+				<br /><br />
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+			</h:form>	
+			
+				
+<!-- 				Janela de Dialog da Obra -->
+
+				<p:dialog header="Medições" widgetVar="dlgMedi" width="600" resizable="false" modal="true" visible="true" closable="false"
+				rendered="#{empty faturaBean.fatura.id}">
+					<h:form id="form1">
+
+						<p:outputPanel id="medicao">
+							<p:dataTable value="#{faturaBean.faturas}" var="fatura" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{fatura.numero}" filterMatchMode="exact"
+									headerText="Numero" style="float: center; text-align: center;">
+									<h:commandLink value="#{fatura.numero}" onclick="dlgMedi.hide()"
+										id="medi" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{faturaBean.fatura}" value="#{fatura}" />
+									</h:commandLink>
+								</p:column>
+								
+								<p:column headerText="Empresa" filterBy="#{fatura.obra.empresa.nome}" filterMatchMode="contains">
+									<h:outputText value="#{fatura.obra.empresa.nome}" />
+								</p:column>
+									
+							</p:dataTable>
+						</p:outputPanel><br />
+
+					<div align="center">
+						<p:commandButton value="Voltar" ajax="false" action="formCadFatura.xhtml?faces-redirect=true">
+							<p:ajax render="@all" />
+						</p:commandButton>
+					</div><br /><br />
+
+					<p:messages />
+
+					</h:form>
+				</p:dialog>	
+				
+				<p:dialog header="Obras" widgetVar="dlgObra" width="700" resizable="true" modal="true">
+					<h:form id="form2">
+
+						<p:outputPanel id="obra">
+							<p:dataTable value="#{obraBean.orderByNome}" var="obra" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{obra.nome}" filterMatchMode="contains"
+									headerText="Numero" style="float: center; text-align: center;">
+									<h:commandLink value="#{obra.nome}" onclick="dlgObra.hide()"
+										id="empenho" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{faturaBean.fatura.obra}" value="#{obra}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+						</p:outputPanel>
+						
+						<p:messages />
+
+					</h:form>
+				</p:dialog>	
+											
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+</html>

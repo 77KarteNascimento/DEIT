@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>DEIT</title>
+	<h:outputStylesheet name="index.css" library="css" />
+</h:head>
+
+
+<body style="background-image: url('resources/imagens/logo_DEIT1.png'); background-repeat:repeat-x;">
+
+	<h:form id="form">
+	
+	<p:focus context="matricula" for="matricula" />
+
+		<div align="center" style="width: 600px; float: center; text-align: center;">
+			<br /><br /><br /><br /><br /><br /><br /><br /><br />
+			<br /><br />
+			<p:messages id="msg" update="display" />
+		</div>
+
+		<div align="center" style="color: white;">
+		<p:fieldset id="fieldset" style="width: 490px; height: 200px; background-image: url(resources/imagens/6.jpg); padding: 20px 50px;">
+		<h:graphicImage name="imagens/loginfuncionario.png" id="loginFuncionario" style="width: 80px; padding: 1px 20px; float: center;" />
+			<br /><br />
+		
+			<h4 align="center" style="color: white;">
+				Matricula:
+				<p:inputText id="matricula" value="#{loginBean.funcionario.matricula}"
+					style="font-size:12px; width: 200px" size="12" required="true"
+					requiredMessage=" Campo Login não pode ser nulo">
+						<p:ajax event="change" />
+				</p:inputText><br /><br />
+
+			</h4>
+
+			<h4 align="center" style="color: white;">
+				Senha:&nbsp;&nbsp;&nbsp;&nbsp;
+				<p:password id="senha" value="#{loginBean.funcionario.senha}"
+					style="font-size:12px;  width: 200px" size="12" required="true"
+					requiredMessage="Campo Senha não pode ser nulo.">
+					<p:ajax event="change" />
+				</p:password>
+			</h4>
+						
+			</p:fieldset><br /><br />
+
+			<p:commandButton value="ENTRAR" action="#{loginBean.efetuaLogin}"
+				ajax="false" style="font-size:11px;">
+					<p:ajax render="@all" />
+			</p:commandButton>	
+
+		</div>
+		<br /><br /><br /><br />
+
+	</h:form>
+
+	<h:form
+		style="float: center; text-align: center; text-decoration: none; font-weight: bold;
+			font-style: italic; font-size: 14px;">
+		<a href="10.59.150.2:8080/SCED_2"> 
+		<h:outputText value="Acessar Sistema SEINF"
+				style="color: yellow; text-decoration: none;" />
+		</a>
+		<!-- 	Incluir uma action com o IP para acessar o sistema SCED -->
+
+	</h:form>
+
+</body>
+
+</html>

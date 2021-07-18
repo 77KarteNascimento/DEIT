@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+			<title>Projeto</title>
+			<h:outputStylesheet name="leo.css" library="css" />
+			<h:outputScript name="locale.js" library="js" />
+	</h:head>
+	
+	<h:body>
+
+	<div id="conteudo">
+		<h:form>
+			<p:menubar>
+				<p:menuitem value="Inicio" url="home.xhtml?faces-redirect=true" />
+				<p:menuitem value="Listar Documentos" url="ListDocumento.xhtml?faces-redirect=true" />
+				<p:menuitem value="Sair do Sistema" action="#{loginBean.sair}" />		
+			</p:menubar>
+		</h:form>	
+			
+			<ui:insert name="corpo" />
+		</div>
+
+	</h:body>
+</html>

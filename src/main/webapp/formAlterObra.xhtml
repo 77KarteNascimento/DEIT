@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_obra.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+
+			<h:form id="form">
+
+				<h2>
+					<h:outputText value="Editar Obra"/>
+				</h2>
+				
+				<p:fieldset>
+				
+				<h:panelGrid columns="3" cellpadding="10" cellspacing="10">
+				
+				<h:outputLabel value="Nome da Obra: " for="nome" style="color: #1E90FF; font-weight:bold;" />
+				<p:inputText id="nome" value="#{obraBean.ob.nome}" style="width: 300px;">
+							<p:ajax event="change" />
+				</p:inputText><br /><br />
+				
+				<h:outputLabel value="Projeto Básico: " for="numero" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText id="numero" value="#{obraBean.ob.documento.numero}" onclick="dlgProjeto.show();">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+				
+				<h:outputLabel value="Tipo de Obra: " for="tipo" style="color: #1E90FF; font-weight:bold;" />
+					<p:selectOneMenu id="tipo" value="#{obraBean.ob.tipo}">
+						<f:selectItem itemLabel="Aquisição" itemValue="Aquisição" />
+						<f:selectItem itemLabel="Aluguel de Equipamentos" itemValue="Aluguel de Equipamentos" />
+						<f:selectItem itemLabel="Estrada"  itemValue="Estrada" />
+						<f:selectItem itemLabel="Ponte"    itemValue="Ponte" />
+						<f:selectItem itemLabel="Diversos" itemValue="Diversos" />
+							<p:ajax event="change" />				
+					</p:selectOneMenu><br /><br />
+										
+				<h:outputLabel value="Número O.S: " for="os" style="color: #1E90FF; font-weight:bold;"  />
+						<p:inputText id="os" value="#{obraBean.ob.os}" required="true" requiredMessage="Informe o Número da O.S" style="width: 100px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+				
+					<h:outputLabel value="Data Inicial da Obra (OS): " for="data" style="color: #1E90FF; font-weight:bold;"  />
+					<p:calendar id="data" value="#{obraBean.ob.data_inicio}" pattern="dd/MM/yyyy" locale="pt_BR" >
+						<p:ajax event="change" />
+					</p:calendar><br /><br />
+					
+					<h:outputLabel value="Previsão Data Final (OS): " for="data2" style="color: #1E90FF; font-weight:bold;"  />
+					<p:calendar id="data2" value="#{obraBean.ob.data_final}" locale="pt_BR" pattern="dd/MM/yyyy">
+						<p:ajax event="change" />
+					</p:calendar><br /><br />
+					
+					<h:outputLabel value="Nº do Processo: " for="proc" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText  id="proc" value="#{obraBean.ob.processo}" required="true" requiredMessage="Informe o Número do Processo" style="width: 140px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+
+					<h:outputLabel value="Objeto da Obra: " for="objeto" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputTextarea id="objeto" value="#{obraBean.ob.objeto}" rows="5" cols="30" required="true" requiredMessage="Informe o Objeto">
+						<p:ajax event="change" />
+					</p:inputTextarea><br /><br />
+					
+					<h:outputLabel value="Valor Total da Obra: " for="valor" style="color: #1E90FF; font-weight:bold;" />
+						<p:inputText id="valor" value="#{obraBean.ob.valor}" required="true" requiredMessage="Informe o Valor Total da Obra">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+						</p:inputText><br /><br />
+					
+					<h:outputLabel value="Nome do Fiscal 1: " for="fiscal1" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText  id="fiscal1" value="#{obraBean.ob.tecnico}" required="true" requiredMessage="Informe o Fiscal 1" style="width: 300px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Nome do Fiscal 2: " for="fiscal2" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText  id="fiscal2" value="#{obraBean.ob.tecnico2}" required="true" requiredMessage="Informe o Fiscal 2" style="width: 300px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Local: " for="municipio" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText id="local" value="#{obraBean.ob.municipio.nome}" onclick="dlgLocal.show();">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Empresa: " for="empresa" style="color: #1E90FF; font-weight:bold;" />
+					<p:inputText id="empresa" value="#{obraBean.ob.empresa.nome}" onclick="dlgEmpresa.show();">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />	
+					
+				</h:panelGrid>	
+									
+				<p:commandButton id="grava" value="ALTERAR" action="#{obraBean.altera}" ajax="false" image="ui-icon-pencil" update="msg"
+					rendered="#{not empty obraBean.ob.id}">
+					<f:ajax render="@all" />
+				</p:commandButton>		
+				
+				<p:commandButton id="cancel" value="CANCELAR" action="formAlterObra.xhtml" immediate="true"
+						rendered="#{not empty obraBean.ob.id}" ajax="false"  image="ui-icon-close" update="msg">
+						<f:ajax render="@all" />
+					</p:commandButton>
+					
+				<br />
+				
+				</p:fieldset>
+				
+				<p:messages id="msg" />
+				
+				<br /><br />
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+			</h:form>	
+			
+			<p:dialog header="Obras Cadastradas" widgetVar="dlgDoc" modal="true" width="500"
+			visible="true" closable="false" rendered="#{empty obraBean.ob.id}">
+					<h:form id="form1">
+
+						<p:outputPanel id="obras">
+							<p:dataTable value="#{obraBean.obras}" var="ob" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{ob.nome}" filterMatchMode="contains"
+									headerText="Nome da Obra" style="float: center; text-align: center;">
+									<h:commandLink value="#{ob.nome}" onclick="dlgDoc.hide()"
+										id="obra" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{obraBean.ob}" value="#{ob}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+						
+						<p:commandButton value="Cancelar" action="formCadObra.xhtml" style="float: center; text-align: center;"
+							ajax="false" />
+							
+						</p:outputPanel>
+						
+						<p:messages />
+
+					</h:form>
+				</p:dialog>
+				
+			<p:dialog header="Projetos Cadastrados" widgetVar="dlgProjeto" modal="true" width="500">
+					<h:form id="form2">
+
+						<p:outputPanel id="projetos">
+							<p:dataTable value="#{documentoBean.documentos}" var="documento" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{documento.numero}" filterMatchMode="exact"
+									headerText="Nome da Obra" style="float: center; text-align: center;">
+									<h:commandLink value="#{documento.numero}/#{documento.ano}" onclick="dlgProjeto.hide()"
+										id="doc" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{obraBean.ob.documento}" value="#{documento}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+						</p:outputPanel>	
+						
+					</h:form>
+				</p:dialog>	
+				
+			<p:dialog header="Local" widgetVar="dlgLocal" modal="true" width="500">
+					<h:form id="form3">
+
+						<p:outputPanel id="locais">
+							<p:dataTable value="#{municipioBean.municipios}" var="municipio" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{municipio.nome}" filterMatchMode="contians"
+									headerText="Nome" style="float: center; text-align: center;">
+									<h:commandLink value="#{municipio.nome} - #{municipio.uf.sigla}" onclick="dlgLocal.hide()"
+										id="doc" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{obraBean.ob.municipio}" value="#{municipio}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+						</p:outputPanel>	
+						
+					</h:form>
+				</p:dialog>	
+				
+			<p:dialog header="Empresas Cadastradas" widgetVar="dlgEmpresa" modal="true" width="700">
+					<h:form id="form4">
+
+						<p:outputPanel id="empresas">
+							<p:dataTable value="#{empresaBean.empresas}" var="empresa" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{empresa.nome}" filterMatchMode="contains"
+									headerText="Nome da Empresa" style="float: center; text-align: center;">
+									<h:commandLink value="#{empresa.nome}" onclick="dlgEmpresa.hide()"
+										id="doc" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{obraBean.ob.empresa}" value="#{empresa}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+						</p:outputPanel>	
+						
+					</h:form>
+				</p:dialog>	
+											
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_empresa.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+
+			<h:form id="form">
+
+				<h2>
+					<h:outputText value="Editar Empresa"/>
+				</h2>
+				
+				<p:fieldset>
+				
+				<h:panelGrid columns="3" cellpadding="10" cellspacing="10">
+				
+				<h:outputLabel value="Nome da Empresa: " for="empresa"  />
+					<p:inputText  id="numero" value="#{empresaBean.empresa.nome}" required="true" requiredMessage="Informe o Nome ou Razão Social da Empresa" style="width: 300px;">
+							<p:ajax event="change" />
+					</p:inputText><br />
+					
+					<h:outputLabel value="CNPJ: " for="cnpj"  />
+					<p:inputMask id="ano" value="#{empresaBean.empresa.cnpj}" 
+					mask="99.999.999/9999-99" required="true" requiredMessage="Informe o Número de CNPJ" style="width: 160px;" maxlength="14">
+							<p:ajax event="change" />
+					</p:inputMask>
+					<br />
+																			
+					<h:outputLabel value="Endereço: " for="endereco"  />
+					<p:inputText  id="endereco" value="#{empresaBean.empresa.endereco}" required="true" requiredMessage="Informe o Endereço" style="width: 400px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					<br />
+					
+					<h:outputLabel value="Telefone: " for="fone"  />
+					<p:inputMask  id="fone" value="#{empresaBean.empresa.telefone}" required="true" requiredMessage="Informe o Telefone" mask="(99)9999-9999">
+							<p:ajax event="change" />
+					</p:inputMask>
+					<br />
+					
+					<h:outputLabel value="Responsável: " for="resp"  />
+					<p:inputText  id="resp" value="#{empresaBean.empresa.responsavel}" required="true" requiredMessage="Informe o Responsável" style="width: 400px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					<br />
+					
+				</h:panelGrid>	
+									
+				<p:commandButton id="grava" value="ALTERAR" action="#{empresaBean.altera}" ajax="false" image="ui-icon-pencil" update="msg"
+					rendered="#{not empty empresaBean.empresa.id}">
+					<f:ajax render="@all" />
+				</p:commandButton>
+				
+				<p:commandButton id="cancel" value="CANCELAR" action="formAlterEmpresa.xhtml" immediate="true"
+						rendered="#{not empty empresaBean.empresa.id}" ajax="false"  image="ui-icon-close" update="msg">
+						<f:ajax render="@all" />
+					</p:commandButton>
+					
+				<br />
+				
+				</p:fieldset>
+				
+				<p:messages id="msg" />
+				
+				<br /><br />
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+			</h:form>	
+			
+			<p:dialog header="Empresas Cadastradas" widgetVar="dlgDoc" modal="true" width="500"
+			visible="true" closable="false" rendered="#{empty empresaBean.empresa.id}">
+					<h:form id="form1">
+
+						<p:outputPanel id="obras">
+							<p:dataTable value="#{empresaBean.empresas}" var="empresa" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{empresa.nome}" filterMatchMode="contains"
+									headerText="Nome">
+									<h:commandLink value="#{empresa.nome}" onclick="dlgDoc.hide()"
+										id="obra" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{empresaBean.empresa}" value="#{empresa}" />
+									</h:commandLink>
+								</p:column>
+								
+								<p:column filterBy="#{empresa.cnpj}" filterMatchMode="contains"
+									headerText="CNPJ" style="float: center; text-align: center;">
+										<h:outputText value="#{empresa.cnpj}" />
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+						
+						<p:commandButton value="Cancelar" action="formCadEmpresa.xhtml" style="float: center; text-align: center;"
+							ajax="false" />
+							
+						</p:outputPanel>
+						
+						<p:messages />
+
+					</h:form>
+				</p:dialog>
+											
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+</html>

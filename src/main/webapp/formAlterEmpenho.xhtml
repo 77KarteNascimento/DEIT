@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_empenho.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+
+			<h:form id="form">
+
+				<h2>
+					<h:outputText value="Editar Empenho"/>
+				</h2>
+				
+				<p:fieldset>
+				
+				<h:panelGrid columns="3" cellpadding="10" cellspacing="10">
+				
+				<h:outputLabel value="Número: " for="numero"  />
+					<p:inputText  id="numero" value="#{empenhoBean.empenho.numero}" required="true" requiredMessage="Informe o Número" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Valor do Empenho: " for="valor"  />
+					<p:inputText  id="valor" value="#{empenhoBean.empenho.valor}" required="true" requiredMessage="Inform o Valor Total">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Fonte Recurso: " for="recurso"  />
+					<p:inputText  id="recurso" value="#{empenhoBean.empenho.fonte_recurso}" required="true" requiredMessage="Informe a Fonte de Recurso" style="width: 200px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Data: " for="data" />
+					<p:calendar id="data" value="#{empenhoBean.empenho.data.time}" locale="pt_BR" pattern="dd/MM/yyyy">
+							<p:ajax event="change" />
+					</p:calendar><br /><br />
+					
+					<h:outputLabel value="Obra: " for="obra"  />
+					<p:inputText  id="obra" value="#{empenhoBean.empenho.obra.nome}" onclick="dlgObra.show();" 
+					required="true" requiredMessage="Informe a Obra" style="width: 200px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Número do Processo: " for="processo"  />
+					<p:inputText  id="processo" value="#{empenhoBean.empenho.processo}" required="true" requiredMessage="Informe o Número do Processo" style="width: 200px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+				</h:panelGrid>	
+									
+				<p:commandButton id="grava" value="ALTERAR" action="#{empenhoBean.altera}" ajax="false" image="ui-icon-pencil" update="msg"
+					rendered="#{not empty empenhoBean.empenho.id}">
+					<f:ajax render="@all" />
+				</p:commandButton>
+				
+				<p:commandButton id="cancel" value="CANCELAR" action="formAlterEmpenho.xhtml" immediate="true"
+						rendered="#{not empty empenhoBean.empenho.id}" ajax="false"  image="ui-icon-close" update="msg">
+						<f:ajax render="@all" />
+					</p:commandButton>
+					
+				<br />
+				
+				</p:fieldset>
+				
+				<p:messages id="msg" />
+				
+				<br /><br />
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+			</h:form>	
+			
+			<p:dialog header="Empenhos Cadastradas" widgetVar="dlgDoc" modal="true" width="500"
+			visible="true" closable="false" rendered="#{empty empenhoBean.empenho.id}">
+					<h:form id="form1">
+
+						<p:outputPanel id="obras">
+							<p:dataTable value="#{empenhoBean.empenhos}" var="emp" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{emp.numero}" filterMatchMode="contains"
+									headerText="Número" style="float: center; text-align: center;">
+									<h:commandLink value="#{emp.numero}" onclick="dlgDoc.hide()"
+										id="obra" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{empenhoBean.empenho}" value="#{emp}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+						
+						<p:commandButton value="Cancelar" action="formCadEmpenho.xhtml" style="float: center; text-align: center;"
+							ajax="false" />
+							
+						</p:outputPanel>
+						
+						<p:messages />
+
+					</h:form>
+				</p:dialog>
+				
+				<p:dialog header="Obras Cadastradas" widgetVar="dlgObra" modal="true">
+					<h:form id="form2">
+
+						<p:outputPanel id="obras2">
+							<p:dataTable value="#{obraBean.obras}" var="obra" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{obra.nome}" filterMatchMode="contains"
+									headerText="Obra" style="float: center; text-align: center;">
+									<h:commandLink value="#{obra.nome}" onclick="dlgObra.hide()"
+										id="obra2" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{empenhoBean.empenho.obra}" value="#{obra}" />
+									</h:commandLink>
+								</p:column>
+									
+							</p:dataTable>
+							
+							<br />
+												
+						</p:outputPanel>
+
+					</h:form>
+				</p:dialog>
+											
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+</html>

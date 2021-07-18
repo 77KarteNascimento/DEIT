@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_documento.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+			<h:form>
+
+				<h2>
+					<h:outputText value="Cadastrar Projeto"/>
+				</h2>
+								
+				<p:fieldset legend="Dados do Projeto">
+				
+				<h:panelGrid columns="7" cellpadding="10" cellspacing="10">
+
+					<h:outputLabel value="Projeto Básico Nº: " for="numero"  />
+					<p:inputText  id="numero" value="#{documentoBean.documento.numero}" 
+					required="true" requiredMessage="Informe o Número" style="width: 90px;">
+							<p:ajax event="change" />
+							
+					</p:inputText>
+					
+					<h:outputLabel value="Ano: " for="ano"  />
+					<p:inputText  id="ano" value="#{documentoBean.documento.ano}" validatorMessage="Ano Inválido, Informe Corretamente Com 4 Digitos"
+					required="true" requiredMessage="Informe o Ano" style="width: 90px;" maxlength="4">
+							<p:ajax event="change" />
+							<f:validateLength maximum="4" minimum="4" />
+					</p:inputText>
+					
+					
+					<h:outputLabel value="Tipo de Obra: " for="tipo"  />
+					<p:selectOneMenu id="tipo" value="#{documentoBean.documento.tipoObra}" required="true" requiredMessage="Informe o Tipo da Obra">
+						<f:selectItem itemLabel="::Selecione::" noSelectionOption="true" />
+						<f:selectItem itemLabel="Aquisição" itemValue="Aquisição" />
+						<f:selectItem itemLabel="Aluguel de Equipamentos" itemValue="Aluguel de Equipamentos" />
+						<f:selectItem itemLabel="Estrada"  itemValue="Estrada" />
+						<f:selectItem itemLabel="Ponte"    itemValue="Ponte" />
+						<f:selectItem itemLabel="Diversos" itemValue="Diversos" />	
+							<p:ajax event="change" />
+					</p:selectOneMenu><br /><br />
+			
+										
+					<h:outputLabel value="Valor do Projeto: " for="valor" />
+						<p:inputText id="valor" value="#{documentoBean.documento.valor_obra}" required="true" requiredMessage="Informe o Valor da Obra" style="width: 90px;">
+							<f:convertNumber pattern="#,##0.00" />
+							<p:ajax event="change" />
+						</p:inputText>
+					
+					<h:outputLabel value="Data de Criação: " for="data" />
+					<p:calendar id="data" value="#{documentoBean.documento.data.time}" locale="pt_BR" pattern="dd/MM/yyyy" />
+					
+					<h:outputLabel value="Prazo (Dias): " for="prazo"  />
+					<p:inputText  id="prazo" value="#{documentoBean.documento.prazo_execucao}" required="true" requiredMessage="Informe o Prazo" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Autor do Projeto Básico: " for="autor"  />
+					<p:inputText  id="autor" value="#{documentoBean.documento.autor_projeto}" required="true" requiredMessage="Informe o Nome do Autor do Projeto" style="width: 220px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Local: " for="municipio" />
+					<p:selectOneMenu value="#{documentoBean.documento.municipio}" converter="genericConverter">
+						<f:selectItem itemLabel="::Selecione::" noSelectionOption="true" />
+						<f:selectItems value="#{municipioBean.municipios}" var="municipio" itemLabel="#{municipio.nome}" itemValue="#{municipio}" />
+							<p:ajax event="change" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel value="Andamento: " for="andamento"  />
+					<p:inputText  id="andamento" value="#{documentoBean.documento.andamento}" required="true" requiredMessage="Informe o Andamento" style="width: 500px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					</h:panelGrid>
+					
+					<h:outputLabel value="Descrição: " for="situacao" />
+					<p:inputTextarea id="situacao" value="#{documentoBean.documento.situacao}" rows="5" cols="40" required="true" requiredMessage="Informe a Situação">
+						<p:ajax event="change" />
+					</p:inputTextarea><br /><br />
+
+					<p:commandButton value="Cadastrar" ajax="false" action="#{documentoBean.grava}" image="ui-icon-disk">
+						<p:ajax render="@all" />
+					</p:commandButton>
+					
+					<p:button id="cancela" type="reset" value="Limpar" />
+
+				</p:fieldset>
+				
+				<p:messages id="msg" />	
+				
+				<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+				</h:form>				
+						
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_empenho.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo">
+			<h:form>
+
+				<h2>
+					<h:outputText value="Cadastrar Empenho"/>
+				</h2>
+					
+				<p:fieldset legend="Dados do Empenho">
+				
+				<h:panelGrid columns="5" cellpadding="10" cellspacing="10">
+
+					<h:outputLabel value="Número: " for="numero"  />
+					<p:inputText  id="numero" value="#{empenhoBean.empenho.numero}" required="true" requiredMessage="Informe o Número" style="width: 90px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Valor do Empenho: " for="valor"  />
+					<p:inputText  id="valor" value="#{empenhoBean.empenho.valor}" required="true" requiredMessage="Inform o Valor Total">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Fonte Recurso: " for="recurso"  />
+					<p:inputText  id="recurso" value="#{empenhoBean.empenho.fonte_recurso}" required="true" requiredMessage="Informe a Fonte de Recurso" style="width: 200px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Data: " for="data" />
+					<p:calendar id="data" value="#{empenhoBean.empenho.data.time}" locale="pt_BR" pattern="dd/MM/yyyy">
+							<p:ajax event="change" />
+					</p:calendar><br /><br />
+					
+					<h:outputLabel value="Obra: " for="tipo" />
+					<p:selectOneMenu value="#{empenhoBean.empenho.obra}" converter="genericConverter" required="true" requiredMessage="Informe a Obra" style="width: 300px;">
+						<f:selectItem itemLabel="::Selecione::" noSelectionOption="true" />
+						<f:selectItems value="#{obraBean.obras}" var="obra" itemLabel="#{obra.nome}" itemValue="#{obra}" />
+							<p:ajax event="change" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel value="Número do Processo: " for="processo"  />
+					<p:inputText  id="processo" value="#{empenhoBean.empenho.processo}" required="true" requiredMessage="Informe o Número do Processo" style="width: 200px;">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					</h:panelGrid>
+					
+					<p:commandButton value="Cadastrar" ajax="false" action="#{empenhoBean.grava}" image="ui-icon-disk">
+						<p:ajax render="@all" />
+					</p:commandButton>
+					
+					<p:button id="cancela" type="reset" value="Limpar" />
+
+				</p:fieldset>
+				
+				<p:messages id="msg" />	
+				
+				<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+				</h:form>				
+						
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

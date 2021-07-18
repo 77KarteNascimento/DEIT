@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>DEIT</title>
+	<h:outputStylesheet library="css" name="leo.css" />
+</h:head>
+
+<h:body>
+	<h:form>
+	
+	<br /><br /><br /><br />
+	
+	<div id="usuarioLogado" style="color: #1E90FF; font-size: 15px; ">
+		<h:outputText value="Usuário: " rendered="#{empty funcionarioBean.funcionario.nome}" />
+		<h:outputText value="#{loginBean.funcionario.nome}" style="font-weight:bold; text-decoration: underline; " />&nbsp; 
+	</div>
+	<br /><br /><br /><br /><br />
+	
+	<div id="menuPrincipal" align="center">
+	
+			<h:commandLink action="formCadDocumento.xhtml?faces-redirect=true">
+				<h:graphicImage value="/resources/imagens/projeto.png" />
+			</h:commandLink>&nbsp;&nbsp;&nbsp;
+			
+			<h:commandLink action="formCadObra.xhtml?faces-redirect=true">
+				<h:graphicImage value="/resources/imagens/obra.png" />
+			</h:commandLink>&nbsp;&nbsp;&nbsp;
+			
+			<h:commandLink action="formCadEmpenho.xhtml?faces-redirect=true">
+				<h:graphicImage value="/resources/imagens/empenho.png" />
+			</h:commandLink><br /><br /><br />
+			
+			<h:commandLink action="formCadFatura.xhtml?faces-redirect=true">
+				<h:graphicImage value="/resources/imagens/prazo.png" />
+			</h:commandLink>&nbsp;&nbsp;&nbsp;
+			
+			<h:commandLink action="formCadFatura.xhtml?faces-redirect=true">
+				<h:graphicImage value="/resources/imagens/fatura2.png" />
+			</h:commandLink>&nbsp;&nbsp;&nbsp;
+							
+			<h:commandLink action="formCadEmpresa.xhtml?faces-redirect=true">
+				<h:graphicImage value="/resources/imagens/empresa.png" />
+			</h:commandLink>&nbsp;&nbsp;&nbsp;			
+			
+			<h:commandLink action="ListDocumento2.xhtml?faces-redirect=true">
+				<h:graphicImage value="/resources/imagens/consultar.png" />
+			</h:commandLink><br /><br /><br /><br />
+			
+			<div id="sair" style="height: 17px;">
+			<h:graphicImage id="sair" value="resources/imagens/sair.gif" onclick="dlg.show()" style="cursor: pointer;" />
+			<br />
+			<h:outputText value="SAIR" />	
+		</div>
+		
+		<br /><br />
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+			
+		
+			<p:dialog header="Deseja Sair do Sistema ?" modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlg">
+				<h:panelGrid columns="2" id="display">
+					<p:commandButton value="SIM" action="#{loginBean.sair}" />
+					<p:commandButton value="NAO" action="home.xhtml?faces-redirect=true" />	
+				</h:panelGrid>
+			</p:dialog>
+
+	</div>
+	
+	
+	<div id="rodape">
+		<hr />
+			&copy; Copyright DEIT - Departamento de Estradas e Infraestrutura de Transportes 2012
+			VERSÃO 1.0
+		</div>
+
+	</h:form>
+</h:body>
+
+</html>

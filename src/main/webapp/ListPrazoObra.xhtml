@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_obra.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo" style="font-size: 11px;">
+			<h:form id="form">
+			
+			<p:growl />
+			
+			<h2>
+					<h:outputText value="Prazo de Entrega" />
+				</h2>
+							
+				<p:dataTable id="listObra" value="#{obraBean.obras}"  var="obra" 
+					emptyMessage="Não Encontrado" paginator="true" rows="20" editable="true" >
+					
+					<p:ajax event="rowEdit" />  
+       				<p:ajax event="rowEditCancel" />  
+					
+					<p:column headerText="Obra" filterBy="#{obra.nome}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{obra.nome}" style="text-align: center; float: center; " />
+					</p:column>
+					
+					<p:column headerText="Local" filterBy="#{obra.municipio.nome}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{obra.municipio.nome}" style="text-align: center; float: center; " />
+					</p:column>
+								
+					<p:column headerText="Empresa" filterBy="#{obra.empresa.nome}" filterMatchMode="contains">
+						<h:outputText value="#{obra.empresa.nome}" />
+					</p:column>
+										
+					<p:column headerText="Data de Início" style="float: center; text-align: center;">
+						<h:outputText value="#{obra.data_inicio}" style="text-align: center; float: center; ">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+						</h:outputText>	
+					</p:column>
+									
+					<p:column headerText="Data Previsão Termino" style="float: center; text-align: center;">
+						<h:outputText value="#{obra.data_final}" style="text-align: center; float: center; ">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+						</h:outputText>	
+					</p:column>
+					
+					<p:column headerText="Situação">
+					<p:cellEditor>  
+						<h:outputText value="#{obra.situacao}" />
+						<f:facet name="output">  
+                    		<h:outputText value="#{obra.situacao}" />  
+                		</f:facet>  
+                		<f:facet name="input">  
+                    		<p:inputText value="#{obra.situacao}" style="width:70%"/>  
+                		</f:facet>  
+					</p:cellEditor>  	
+					</p:column>
+					
+					<p:column style="width:6%">
+						<p:rowEditor />
+					</p:column>
+					
+					<p:column style="text-align: center;">
+						<p:commandButton value="Mudar Status" id="button" action="#{obraBean.concluirObra}"
+						ajax="false" update=":form:listObra" icon="ui-icon-check" title="Concluir Obra">
+							<f:ajax render="@form" />
+							<f:setPropertyActionListener for="button" id="parametro" target="#{obraBean.ob}" value="#{obra}" />
+						</p:commandButton>	
+					</p:column>
+
+				</p:dataTable>
+				
+				<br />
+				<div align="center">
+					<p:commandLink id="imprime" title="Imprimir"
+							onclick="window.print();" ajax="false">
+									<f:ajax render="@form" />
+										<p:graphicImage value="resources/imagens/imprime.png"
+										style="width: 50px;"/>
+					</p:commandLink>
+				</div>
+				
+				<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+									
+			</h:form>
+			
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

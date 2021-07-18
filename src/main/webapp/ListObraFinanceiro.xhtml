@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_fatura.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo" style="font-size: 10px;">
+			<h:form>
+				
+				<p:dataTable id="listFinanceiro" value="#{faturaBean.faturas}"  var="fatura" 
+					emptyMessage="Nenhuma Obra Encontrada" paginator="true" rows="20" >
+					
+					<p:column headerText="Fatura" filterBy="#{fatura.numero}" filterMatchMode="exact" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.numero}" />
+					</p:column>
+					
+					<p:column headerText="Objeto" filterBy="#{fatura.obra.objeto}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.obra.objeto}" style="width: 90px; text-align: center; float: center; " />
+					</p:column>
+					
+					<p:column headerText="Local" filterBy="#{fatura.obra.municipio.nome}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.obra.municipio.nome}" style="width: 90px; text-align: center; float: center; " />
+					</p:column>
+					
+					<p:column headerText="Fiscal" filterBy="#{fatura.obra.tecnico}" filterMatchMode="contains" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.obra.tecnico}" />
+					</p:column>
+					
+					<p:column headerText="Processo" filterBy="#{fatura.obra.processo}" filterMatchMode="contains">
+						<h:outputText value="#{fatura.obra.processo}" />
+					</p:column>
+					
+					<p:column headerText="Valor da Obra" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.valor_acumulado}">
+							<f:convertNumber type="currency" locale="pt_BR" pattern="#,##0.00" />
+						</h:outputText>	
+					</p:column>
+					
+					<p:column headerText="% Financeiro" style="float: center; text-align: center;">
+						<h:outputText value="#{fatura.financeiro}">
+							<f:convertNumber type="percent" pattern="00.00" />
+						</h:outputText>
+					</p:column>
+															
+				</p:dataTable>
+				
+				<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+				</h:form>	
+										
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

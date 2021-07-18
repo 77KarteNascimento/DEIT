@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_obra.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo" style="font-size: 11px;">
+			<h:form>
+
+				<h2>
+					<h:outputText value="Medição"/>
+				</h2>
+				
+				<p:fieldset legend="Dados da Obra">
+				
+				<h:panelGrid columns="7" cellpadding="3" cellspacing="3">
+				
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+					<h:outputLabel value="Nome da Obra: " for="nome"  />
+				</h:outputLink>	
+					<p:inputText id="nome" value="#{obraBean.ob.nome}" onclick="dlgObra.show();" style="width: 300px;">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Número do Documento: " for="numero" />
+					<p:inputText id="numero" value="#{obraBean.ob.documento.numero}" disabled="true" style="width: 70px;">
+							<p:ajax event="change" />
+					</p:inputText>
+										
+					<h:outputLabel value="Tipo de Obra: " for="tipo" />
+					<p:selectOneMenu id="tipo" value="#{obraBean.ob.tipo}" disabled="true">
+						<f:selectItem itemLabel="::Selecione::" noSelectionOption="true" />
+						<f:selectItem itemLabel="Aquisição" itemValue="Aquisição" />
+						<f:selectItem itemLabel="Aluguel de Equipamentos" itemValue="Aluguel de Equipamentos" />
+						<f:selectItem itemLabel="Estrada"  itemValue="Estrada" />
+						<f:selectItem itemLabel="Ponte"    itemValue="Ponte" />
+						<f:selectItem itemLabel="Diversos" itemValue="Diversos" />	
+							<p:ajax event="change" />					
+					</p:selectOneMenu><br /><br />
+				
+					<h:outputLabel value="Data Inicial da Obra (OS): " for="data"  />
+					<p:calendar id="data" value="#{obraBean.ob.data_inicio.time}" disabled="true" pattern="dd/MM/yyyy" locale="pt_BR" >
+							<p:ajax event="change" />
+					</p:calendar>
+
+					<h:outputLabel value="Objeto da Obra: " for="objeto"  />
+					<p:inputText id="objeto" value="#{obraBean.ob.objeto}" style="width: 300px;" disabled="true">
+						<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Valor Total da Obra: " for="valor" />
+						<p:inputText id="valor" value="#{obraBean.ob.valor}" disabled="true">
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+						</p:inputText><br /><br />
+					
+					</h:panelGrid>	
+					
+					</p:fieldset>
+					
+					<p:fieldset legend="Dados da Empresa">	
+					<h:panelGrid columns="5" cellpadding="3" cellspacing="3">
+					
+					<h:outputLabel value="Empresa: " for="empresa"  />
+					<p:inputText  id="empresa" value="#{obraBean.ob.empresa}" style="width: 300px;" disabled="true">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="CNPJ: " for="cnpj"  />
+					<p:inputText  id="cnpj" value="#{obraBean.ob.cnpj}" style="width: 110px;" disabled="true">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					<h:outputLabel value="Endereço: " for="end"  />
+					<p:inputText  id="end" value="#{obraBean.ob.endereco}" style="width: 300px;" disabled="true">
+							<p:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel value="Representante: " for="repre"  />
+					<p:inputText  id="repre" value="#{obraBean.ob.representante}" style="width: 200px;" disabled="true">
+							<p:ajax event="change" />
+					</p:inputText><br /><br />
+					
+					</h:panelGrid>
+					</p:fieldset>
+
+				<p:fieldset legend="Dados da Fatura">
+					<h:panelGrid columns="7" cellpadding="3" cellspacing="3">
+
+						<h:outputLabel value="Atestado: " for="atestado"  />
+							<p:inputText  id="atestado" value="#{faturaBean.fatura.atestado}" style="width: 70px;">
+								<p:ajax event="change" />
+							</p:inputText>
+
+						<h:outputLabel value="Data: " for="data2" />
+						<p:calendar id="data2" value="#{faturaBean.fatura.data.time}">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" locale="pt_BR" />
+									<p:ajax event="change" />
+						</p:calendar>
+
+						<h:outputLabel value="Empenho: " for="empenho"  />
+							<p:inputText  id="empenho" value="#{faturaBean.fatura.empenho}" style="width: 70px;">
+								<p:ajax event="change" />
+							</p:inputText><br /><br />	
+							
+						<h:outputLabel value="Fonte: " for="fonte"  />
+							<p:inputText  id="fonte" value="#{faturaBean.fatura.fonte}" style="width: 70px;">
+								<p:ajax event="change" />
+							</p:inputText>	
+						
+						<h:outputLabel value="Nota Fiscal: " for="nf"  />
+							<p:inputText  id="nf" value="#{faturaBean.fatura.nota}" style="width: 100px;">
+								<p:ajax event="change" />
+							</p:inputText>	
+							
+						<h:outputLabel value="Valor da Fatura: " for="vlr_fatura" />
+						<p:inputText id="vlr_fatura" value="#{faturaBean.fatura.valor_fatura}" >
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+						</p:inputText><br /><br />
+						
+						<h:outputLabel value="Valor da Acumulado: " for="vlr_acumulado" />
+						<p:inputText id="vlr_acumulado" value="#{faturaBean.fatura.valor_acumulado}" >
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+						</p:inputText>
+						
+						<h:outputLabel value="Valor da Saldo " for="vlr_saldo" />
+						<p:inputText id="vlr_saldo" value="#{faturaBean.fatura.saldo}" >
+							<f:convertNumber pattern="#,##0.00" />
+								<p:ajax event="change" />
+						</p:inputText>
+						
+						<h:outputLabel value="Financeiro (%): " for="financeiro"  />
+							<p:inputText  id="financeiro" value="#{faturaBean.fatura.financeiro}" style="width: 60px;">
+								<p:ajax event="change" />
+							</p:inputText><br /><br />	
+
+					</h:panelGrid>
+				</p:fieldset>
+
+				<p:commandButton value="Cadastrar" ajax="false" action="#{obraBean.grava}" image="ui-icon-disk">
+ 						<f:ajax render="@all" /> 
+ 					</p:commandButton>
+					
+					<p:button id="cancela" type="reset" value="Limpar" />
+					
+					<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+					
+					</h:form>		
+					
+					<p:dialog header="Obras Cadastradas" widgetVar="dlgObra" width="700">
+					<h:form id="form1">
+
+						<p:outputPanel id="obras">
+							<p:dataTable value="#{obraBean.obras}" var="ob" paginator="true"
+								rows="10" emptyMessage="Não Encontrado">
+
+								<p:column filterBy="#{ob.nome}" filterMatchMode="contains"
+									headerText="Numero" style="float: center; text-align: center;">
+									<h:commandLink value="#{ob.nome}" onclick="dlgObra.hide()"
+										id="obra" style="color: blue;">
+										<f:setPropertyActionListener
+											target="#{obraBean.ob}" value="#{ob}" />
+									</h:commandLink>
+								</p:column>
+								
+								<p:column headerText="Tipo">
+									<h:outputText value="#{ob.objeto}" />
+								</p:column>
+									
+							</p:dataTable>
+						</p:outputPanel>
+
+					</h:form>
+				</p:dialog>		
+						
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

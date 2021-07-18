@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_obra.xhtml">
+	<ui:define name="corpo">
+
+		<div id="conteudo" style="font-size: 11px;">
+			<h:form id="form">
+			
+			<h2>
+					<h:outputText value="Termo Aditivo" />
+				</h2>
+				
+				<p:fieldset legend="Pesquisar" rendered="#{not empty obraBean.ob.id}">
+							
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+					<h:outputLabel value="Nome da Obra: " />
+				</h:outputLink>
+					<h:outputLabel value="#{obraBean.ob.nome}" style="color: #1E90FF; font-weight:bold;" />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
+					<h:outputLabel value="Data Inicial: " />
+					<h:outputLabel value="#{obraBean.ob.data_inicio}" style="color: #1E90FF; font-weight:bold;">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+					</h:outputLabel>	
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
+					<h:outputLabel value="Previsão Novo Término: " style="color: red;" />
+					<h:outputLabel value="#{obraBean.ob.aditivo1}" rendered="#{empty obraBean.ob.aditivo2}" style="color: #1E90FF; font-weight:bold;">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+					</h:outputLabel>	
+					
+					<h:outputLabel value="#{obraBean.ob.aditivo2}" rendered="#{empty obraBean.ob.aditivo3}" style="color: #1E90FF; font-weight:bold;">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+					</h:outputLabel>
+					
+					<h:outputLabel value="#{obraBean.ob.aditivo3}" rendered="#{not empty obraBean.ob.aditivo2}" style="color: #1E90FF; font-weight:bold;">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+					</h:outputLabel>		
+
+				</p:fieldset>			
+								
+				<p:fieldset legend="Pesquisar" rendered="#{empty obraBean.ob.id}">
+							
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+					<h:outputLabel value="Pesquisar Obra: " />
+				</h:outputLink>
+				<h:outputLink value="javascript:void(0)" onclick="dlgObra.show();">
+				<h:graphicImage value="resources/imagens/lupa.jpg"  onclick="dlgPrazo.show();"
+					style="width: 40px;"/>
+				</h:outputLink>
+
+				</p:fieldset><br />
+				
+				<p:fieldset rendered="#{not empty obraBean.ob.id}">
+				<br />
+				
+				<h:panelGrid columns="7" cellpadding="3" cellspacing="3">
+				
+				<div>
+				
+				<h:outputLabel value="Termo Aditivo 1: " for="tra1"  />
+					<p:calendar id="tra1" value="#{obraBean.ob.aditivo1}" rendered="#{empty obraBean.ob.aditivo1}" >
+							<p:ajax event="change" />
+					</p:calendar>
+					
+					<p:calendar id="tra12" value="#{obraBean.ob.aditivo1}" rendered="#{not empty obraBean.ob.aditivo1}" disabled="true">
+							<p:ajax event="change" />
+					</p:calendar>	
+					
+				<h:outputLabel value="Termo Aditivo 2: " for="tra2"  />
+					<p:calendar id="tra2" value="#{obraBean.ob.aditivo2}" rendered="#{empty obraBean.ob.aditivo2}" >
+							<p:ajax event="change" />
+					</p:calendar>
+					
+					<p:calendar id="tra22" value="#{obraBean.ob.aditivo2}" rendered="#{not empty obraBean.ob.aditivo2}" disabled="true" >
+							<p:ajax event="change" />
+					</p:calendar>	
+					
+				<h:outputLabel value="Termo Aditivo 3: " for="tra3"  />
+					<p:calendar id="tra3" value="#{obraBean.ob.aditivo3}" rendered="#{empty obraBean.ob.aditivo3}" >
+							<p:ajax event="change" />
+					</p:calendar>
+					
+					<p:calendar id="tra33" value="#{obraBean.ob.aditivo3}" rendered="#{not empty obraBean.ob.aditivo3}" disabled="true">
+							<p:ajax event="change" />
+					</p:calendar><br />	<br />
+					
+				</div>	
+				
+				</h:panelGrid>
+				
+				<div align="center">
+						<p:commandButton id="grava" title="Gravar" value="OK" rendered="#{empty obraBean.ob.aditivo3}"
+							action="#{obraBean.gravaPrazo}" ajax="false"
+							update="msg">
+							<p:ajax render="@all" />
+						</p:commandButton>
+						
+						<p:commandButton id="cancel" value="CANCELAR" action="formCadPrazo.xhtml"
+						ajax="false"  image="ui-icon-close" update="msg">
+						<p:ajax render="@all" />
+					</p:commandButton>
+				
+				</div>
+				
+				
+				</p:fieldset>
+				
+				<p:messages />
+				
+				<p:ajaxStatus style="width:120px;height:120px;position:fixed;right:5px;bottom:5px">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+									
+			</h:form>
+			
+			<p:dialog header="Obra" widgetVar="dlgObra" modal="true"
+				width="900" resizable="false">
+				<h:form id="form2">
+
+					<p:outputPanel id="obras">
+					<p:growl id="grow">
+					
+						<p:dataTable value="#{obraBean.obras}" var="obra"
+							paginator="true" rows="4" dynamic="true" emptyMessage="Não Encontrado">	
+
+							<p:column filterBy="#{obra.nome}" filterMatchMode="contains"
+								headerText="Nome" sortBy="#{obra.nome}">								
+								<h:commandLink value="#{obra.nome}" onclick="dlgObra.hide()" style="color: blue;">
+									<f:setPropertyActionListener target="#{obraBean.ob}" value="#{obra}" />
+								</h:commandLink>
+							</p:column>
+							
+							<p:column filterBy="#{obra.objeto}" filterMatchMode="contains"
+								headerText="Objeto" sortBy="#{obra.objeto}">								
+								<h:outputText value="#{obra.objeto}" />
+							</p:column>
+							
+						</p:dataTable>
+					</p:growl>	
+					</p:outputPanel>
+
+				</h:form>
+			</p:dialog>
+			
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

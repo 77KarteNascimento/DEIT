@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_obra.xhtml">
+	<ui:define name="corpo"><br />
+
+		<div id="conteudo">
+
+			<h:form id="form">
+
+				<h2>
+					<h:outputText value="Cadastrar Município" />
+				</h2>
+				<br />
+
+				<p:messages id="msg" />
+				
+				<p:fieldset legend="Dados do Municipio">
+				<h:panelGrid columns="3">
+												
+				<h:outputLabel value="Nome: " for="nome" />
+				<p:inputText id="numero" value="#{municipioBean.municipio.nome}" required="true" requiredMessage="Preencha Corretamente o Campo Município">
+					<f:ajax event="change" />
+				</p:inputText><br /><br />
+				
+				<h:outputLabel value="Estado: " for="estado" />
+					<p:selectOneMenu value="#{municipioBean.municipio.uf}" converter="genericConverter" required="true" requiredMessage="Escolha a Unidade da Federação do Município">
+						<f:selectItems value="#{ufBean.UFS}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf}" />
+					</p:selectOneMenu><br /><br />
+				
+				</h:panelGrid>
+				
+				<p:commandButton id="grava" value="GRAVAR" action="#{municipioBean.grava}" ajax="false" icon="ui-icon-disk">
+					<f:ajax render="@all" />
+				</p:commandButton>
+								
+				</p:fieldset>
+				
+				<br /><br />
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/resources/imagens/ajaxloading1.gif" />
+						Aguarde...
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+			</h:form>	
+
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+</html>
